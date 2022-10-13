@@ -1,48 +1,129 @@
 <!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+	<title>From NGINX + php-fpm to NGINX Unit</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
+	<link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/brands.min.css">
+	<link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/solid.min.css">
+	<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/index.css">
+	<link rel="stylesheet" href="node_modules/@fontsource/inter/index.css">
+	<link rel="stylesheet" href="node_modules/@fontsource/roboto-mono/index.css">
+	<link rel="stylesheet" href="dist/theme/pnx.css">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2
-						<aside class="notes">
-						<p>Some notes</p>
-						</aside>
-						<p>Some slide text</p>
-						<aside class="notes">
-						<p>and some more notes</p>
-					</aside>
-				</section>
+	<!-- Theme used for syntax highlighted code -->
+	<!--	<link rel="stylesheet" href="node_modules/highlight.js/styles/">-->
+	<link rel="stylesheet" href="plugin/highlight/dracula.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-image="images/PNX Title Slide BG.png" style="text-align: left">
+			<h1>From NGINX + php-fpm to NGINX Unit</h1>
+
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+			<h6>Luhur Abdi Rizal (Abi)</h6>
+			<img src="images/PNX%20logo.png" alt="Previousnext" style="max-height: 1rem">
+		</section>
+
+		<section data-markdown="slides.md"
+						 data-background-image="images/PNX Slide BG.png"
+						 data-separator-vertical="^\r?\n\*\*\*\r?\n$">
+		</section>
+
+		<section data-background-image="images/PNX Slide BG.png" data-transition="fade"
+						 data-transition-speed="slow">
+			<h3>Containerization</h3>
+
+			<div class="r-hstack">
+				<img class="fragment" src="images/separate-container.svg" alt="Separate container"
+						 data-fragment-index="2"/>
+				<div class="fragment" style="margin-inline: 5rem" data-fragment-index="1">
+					VS
+				</div>
+				<img class="fragment" src="images/single-container.svg" alt="Single container"
+						 data-fragment-index="3"/>
 			</div>
-		</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+			<aside class="notes">
+				When talking about containerization in PHP using NGINX, I've seen the community is divided
+				into two arguments, should NGINX and php-fpm run in two separate containers, or should they
+				run together in a single container?
+				Running NGINX and php-fpm in separate containers requires the PHP application to reside in a
+				shared volume that is mounted to both containers.
+				The other side of the argument is to run both NGINX and php-fpm in a single container. This
+				usually comes with the php application residing inside the container without mounted volume
+				and copied when building the image.
+				If we can't use two separate containers, or can't mount the application to the container,
+				for example in Platform as a Service like (a) or (b), or some organization policy, we have
+				to choose this option.
+			</aside>
+		</section>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+		<section data-background-image="images/PNX Slide BG.png" data-transition="fade">
+			<section>
+				<h3>Containerization</h3>
+
+				<div class="r-hstack">
+					<img src="images/separate-container.svg" alt="Separate container" style="opacity: .25"/>
+					<div style="margin-inline: 5rem">
+						<del>VS</del>
+					</div>
+					<img src="images/single-container.svg" alt="Single container" style="opacity: .25"/>
+				</div>
+
+				<aside class="notes">
+					Now with NGINX Unit, we don't have to worry about that anymore, because it is only one
+					service, so one container is enough, we can mount the application to the container, or we
+					can copy the application to the container when building the image. So it fits all our needs,
+					whichever it is.
+				</aside>
+			</section>
+
+			<section data-markdown="containerization.md"></section>
+		</section>
+
+		<section data-markdown="recap.md" data-background-image="images/PNX Slide BG.png">
+		</section>
+
+		<section data-background-image="images/PNX Slide BG.png">
+			<h2>Questions?</h2>
+
+			<ul style="list-style-type: none; margin-left: 0; text-align: inherit;">
+				<li><i class="fa-solid fa-envelope"></i> abi@previousnext.com.au</li>
+				<li><i class="fa-brands fa-twitter"></i> @el_abee</li>
+				<li><i class="fa-brands fa-slack"></i> @el7cosmos</li>
+			</ul>
+		</section>
+	</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+  // More info about initialization & config:
+  // - https://revealjs.com/initialization/
+  // - https://revealjs.com/config/
+  Reveal.initialize({
+    hash: true,
+    disableLayout: false,
+
+    // Learn about plugins: https://revealjs.com/plugins/
+    plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
 </html>
